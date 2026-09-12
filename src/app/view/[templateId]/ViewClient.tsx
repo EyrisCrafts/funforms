@@ -11,9 +11,12 @@ export default function ViewClient({ id }: { id: string }) {
   const stored = useFormStore((s) => s.forms[id]);
   const [note, setNote] = useState<string | null>(null);
 
+  const [bare, setBare] = useState(false);
+
   useEffect(() => {
     ensure(id);
     try {
+      if (new URLSearchParams(location.search).get("bare") === "1") setBare(true);
       const n = sessionStorage.getItem("formify:note");
       if (n) {
         setNote(n);
@@ -43,6 +46,15 @@ export default function ViewClient({ id }: { id: string }) {
         >
           ✨ Create a new form
         </Link>
+      </div>
+    );
+  }
+
+  // Bare mode (?bare=1): just the form, no chrome — used for clean captures.
+  if (bare) {
+    return (
+      <div className="min-h-screen">
+        <FormRenderer form={form} mode="fill" />
       </div>
     );
   }

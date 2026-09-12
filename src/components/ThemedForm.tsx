@@ -49,7 +49,7 @@ export default function ThemedForm({ form, mode }: Props) {
   return (
     <div
       className={`relative w-full overflow-hidden ${s.pageBg} px-4 py-14 ${
-        mode === "preview" ? "min-h-[1100px]" : ""
+        mode === "preview" ? "min-h-[1100px]" : "min-h-screen"
       }`}
     >
       {/* Toggleable decorative SVG background (varies per variant) */}
