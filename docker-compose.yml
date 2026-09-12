@@ -1,0 +1,14 @@
+services:
+  funforms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: funforms
+    container_name: funforms
+    ports:
+      - "3000:3000"
+    environment:
+      # Read from your shell / .env file. Needed for AI theme generation.
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - NODE_ENV=production
+    restart: unless-stopped

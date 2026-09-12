@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-pixel: "Press Start 2P", monospace;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-hand: "Caveat", cursive;
+  --font-serif: "Georgia", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #0b0e14;
+  color: #e6e6e6;
+}
+
+/* Crisp edges for pixel-art elements */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* ---------- Terminal theme ---------- */
+.crt {
+  position: relative;
+  overflow: hidden;
+}
+.crt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.25) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  pointer-events: none;
+  z-index: 5;
+  animation: crt-flicker 0.15s infinite;
+}
+@keyframes crt-flicker {
+  0% { opacity: 0.9; }
+  50% { opacity: 1; }
+  100% { opacity: 0.92; }
+}
+
+/* ---------- Nerdy: graph paper ---------- */
+.graph-paper {
+  background-color: #fbfbf3;
+  background-image:
+    linear-gradient(rgba(80, 120, 200, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 120, 200, 0.18) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* ---------- Retro: hard pixel border ---------- */
+.pixel-border {
+  border-style: solid;
+  border-width: 4px;
+  box-shadow:
+    0 4px 0 0 rgba(0, 0, 0, 0.35),
+    inset -4px -4px 0 0 rgba(0, 0, 0, 0.25),
+    inset 4px 4px 0 0 rgba(255, 255, 255, 0.15);
+}
+
+.pixel-btn:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+/* thin custom scrollbar in themed cards */
+.theme-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.theme-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* falling leaf helper (autumn) */
+.leaf {
+  position: absolute;
+  top: -24px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@keyframes leaf-fall {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  100% {
+    transform: translateY(110vh) translateX(var(--drift, 40px)) rotate(540deg);
+    opacity: 0.9;
+  }
+}
+
+/* ---------- Cosmic: twinkling stars ---------- */
+.star {
+  position: absolute;
+  border-radius: 9999px;
+  background: #fff;
+  will-change: opacity, transform;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ---------- Ocean: rising bubbles ---------- */
+.bubble {
+  position: absolute;
+  bottom: -40px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.08));
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+@keyframes bubble-rise {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.8; }
+  100% { transform: translateY(-115vh) translateX(var(--drift, 20px)); opacity: 0; }
+}
+
+/* ---------- Synthwave: moving perspective grid ---------- */
+.neon-grid {
+  position: absolute;
+  left: -25%;
+  right: -25%;
+  bottom: 0;
+  height: 55%;
+  width: 150%;
+  background-image:
+    linear-gradient(rgba(255, 46, 151, 0.55) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.45) 2px, transparent 2px);
+  background-size: 44px 44px;
+  transform: perspective(340px) rotateX(62deg);
+  transform-origin: bottom center;
+  animation: grid-scroll 1.6s linear infinite;
+  mask-image: linear-gradient(to top, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 40%, transparent 100%);
+}
+@keyframes grid-scroll {
+  0% { background-position-y: 0, 0; }
+  100% { background-position-y: 44px, 0; }
+}
+
+/* Neon text glow */
+.neon-pink {
+  text-shadow: 0 0 5px #ff2e97, 0 0 12px #ff2e97, 0 0 24px rgba(255, 46, 151, 0.7);
+}
+.neon-cyan {
+  text-shadow: 0 0 5px #00e5ff, 0 0 12px rgba(0, 229, 255, 0.7);
+}
+.neon-purple {
+  text-shadow: 0 0 6px #b8a6ff, 0 0 16px rgba(150, 120, 255, 0.7);
+}
+
+/* ---------- Comic: halftone dots + inked outline ---------- */
+.halftone {
+  background-color: #ffe14d;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.16) 2.5px, transparent 2.6px);
+  background-size: 16px 16px;
+}
+.comic-outline {
+  -webkit-text-stroke: 2px #000;
+  paint-order: stroke fill;
+}
+
+/* ---------- Winter: snow ---------- */
+.snowflake {
+  position: absolute;
+  top: -16px;
+  border-radius: 9999px;
+  background: #fff;
+  pointer-events: none;
+  will-change: transform;
+}
+@keyframes snow-fall {
+  0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
+  10% { opacity: 0.95; }
+  100% { transform: translateY(112vh) translateX(var(--drift, 30px)); opacity: 0.9; }
+}
+
+/* ---------- Birthday: confetti ---------- */
+.confetti {
+  position: absolute;
+  top: -20px;
+  pointer-events: none;
+  will-change: transform;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(112vh) rotate(720deg); opacity: 0.95; }
+}
+
+/* ---------- Kawaii: floating hearts ---------- */
+.heart {
+  position: absolute;
+  bottom: -30px;
+  pointer-events: none;
+  will-change: transform;
+}
+@keyframes heart-rise {
+  0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translateY(-116vh) scale(1) translateX(var(--drift, 20px)) rotate(20deg); opacity: 0; }
+}
+
+/* ---------- Western: drifting dust ---------- */
+.dust {
+  position: absolute;
+  border-radius: 9999px;
+  background: rgba(255, 240, 200, 0.55);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+@keyframes dust-drift {
+  0% { transform: translate(0, 0); opacity: 0; }
+  20% { opacity: 0.7; }
+  80% { opacity: 0.5; }
+  100% { transform: translate(var(--dx, 120px), var(--dy, -40px)); opacity: 0; }
+}
+
+/* ---------- Noir: sweeping spotlight + film grain ---------- */
+.noir-spot {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.16), transparent 45%);
+  animation: spot-sweep 9s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes spot-sweep {
+  0%, 100% { transform: translateX(-18%); }
+  50% { transform: translateX(18%); }
+}
+.film-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: repeating-radial-gradient(rgba(255,255,255,0.5) 0 1px, transparent 1px 3px);
+  background-size: 4px 4px;
+  animation: grain 0.6s steps(2) infinite;
+  pointer-events: none;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-2px, 1px); }
+}
+.blinds {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.06) 0px,
+    rgba(255,255,255,0.06) 2px,
+    transparent 2px,
+    transparent 26px
+  );
+}
+
+/* ---------- Custom (AI-generated) themes: token-driven styling ---------- */
+.cf-card {
+  background: var(--cf-card-bg);
+  border: 2px solid var(--cf-card-border);
+  color: var(--cf-text);
+  border-radius: var(--cf-radius);
+}
+.cf-title { color: var(--cf-title); }
+.cf-muted { color: var(--cf-muted); }
+.cf-label { color: var(--cf-muted); font-weight: 600; }
+.cf-input {
+  width: 100%;
+  background: var(--cf-input-bg);
+  border: 1.5px solid var(--cf-input-border);
+  color: var(--cf-text);
+  border-radius: var(--cf-radius);
+  padding: 0.55rem 0.75rem;
+}
+.cf-input::placeholder { color: var(--cf-muted); opacity: 0.55; }
+.cf-input:focus {
+  outline: none;
+  border-color: var(--cf-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cf-accent) 25%, transparent);
+}
+.cf-btn {
+  background: var(--cf-accent);
+  color: var(--cf-accent-text);
+  border-radius: var(--cf-radius);
+  font-weight: 700;
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+.cf-btn:hover { filter: brightness(1.07); }
+.cf-btn:active { transform: translateY(1px); }
+.cf-accent { color: var(--cf-accent); }
+.cf-accent-bg { background: var(--cf-accent); }
+
+/* backdrops (tinted with the theme accent) */
+.cf-bg-dots {
+  background-image: radial-gradient(var(--cf-accent) 1.6px, transparent 1.7px);
+  background-size: 22px 22px;
+  opacity: 0.13;
+}
+.cf-bg-grid {
+  background-image:
+    linear-gradient(var(--cf-accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cf-accent) 1px, transparent 1px);
+  background-size: 42px 42px;
+  opacity: 0.1;
+}
